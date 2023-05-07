@@ -10,23 +10,34 @@ array = np.asarray(image)
 plt.imshow(array)
 
 def cooling():
-	t = 50000
+	# current solution, initially set to random
 	current = np.array([random.uniform(0, 500), random.uniform(0, 500)])
-	for i in range(t):
+	delta = []
+	for i in range(10):
+		x, y = current
+		new = np.array([random.uniform(x-25, x+25), random.uniform(y-25, y+25)])
+		delta.append(abs(objective_function(new) - objective_function(current)))
+		current = new
+	t = np.mean(delta) / math.log(2)
+	print("initial temperature is ", t)
+	bestV = 1
+	bestS = []
+	for i in range(10000):
 		x, y = current
 		# let the neiborhood be 50 px
 		new = np.array([random.uniform(x-25, x+25), random.uniform(y-25, y+25)])
 		print("pixel value ", objective_function(new))
-		if objective_function(new) == 0:
-			current = new
-			return current
 		if objective_function(new) < objective_function(current):
 			current = new
 		if random.uniform(0, 1) < (math.e)**(-(objective_function(new) - objective_function(current))/t):
 			current = new
+		if objective_function(current) <= bestV:
+			bestV = objective_function(new)
+			bestS = current
 		# linear cooling schedule
-		t -= 1
-	return current
+		t -= 0.01
+	print(bestV, bestS)
+	return bestS
 
 def objective_function(s, data=array):
 	x, y = s
