@@ -19,6 +19,7 @@ pip install -r requirements.txt
 python file_name.py
 
 # PSO result
+Optimum is the black spot
+
 ![Screenshot at 2023-05-02 07-13-15](https://user-images.githubusercontent.com/107351924/235578199-559e6239-d18e-4dc3-8540-30a8ba22f663.png)
 
-Sometimes not so good )
